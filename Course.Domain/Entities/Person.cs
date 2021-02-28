@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Course.Entities
 {
     public class Person

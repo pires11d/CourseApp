@@ -3,27 +3,18 @@ using Course.Entities.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Reflection;
-using System.Text;
 
-namespace Course
+namespace Course.Services
 {
-    public class Program
+    public class AccountService
     {
-        public static void Main(string[] args)
+        public AccountService()
         {
-            Console.OutputEncoding = Encoding.UTF8;
-
-            Extensions.CallByName("TestingAccount");
-        }       
-
-        public static void TestingAccount()
-        {
-            List<Account> contas = new List<Account>();
-            StartAccountOperation(contas);            
+            Accounts = new List<Account>();
         }
+        public List<Account> Accounts { get; set; }
 
-        private static void StartAccountOperation(List<Account> contas)
+        public void StartOperation()
         {
             // CRIAÇÃO DE CONTA
             Console.Clear();
@@ -41,12 +32,12 @@ namespace Course
             {
                 Console.WriteLine($"Erro no valor de entrada: {ex.Message}");
                 Console.ReadLine();
-                StartAccountOperation(contas);
+                StartOperation();
             }
 
             Account conta = new Account(name, amount);
             Console.WriteLine(conta);
-            contas.Add(conta);
+            Accounts.Add(conta);
 
             // OPERAÇÕES COM A CONTA
             try
@@ -89,51 +80,13 @@ namespace Course
             switch (option.Key)
             {
                 case ConsoleKey.Enter:
-                    StartAccountOperation(contas);
+                    StartOperation();
                     break;
                 case ConsoleKey.Escape:
                     break;
                 default:
                     break;
             }
-        }
-
-        private static void TestingPerson()
-        {
-            string nome = "Maria";
-            char genero = 'F';
-            int idade = 27;
-            double altura = 1.70;
-
-            var pessoa = new Person(nome, idade, altura, genero);
-
-            Console.WriteLine(pessoa.ToString(1));
-            Console.WriteLine(pessoa.ToString(2));
-            Console.WriteLine(pessoa.ToString(3));
-        }
-
-        private static void TestingTypes()
-        {
-            sbyte sb = 127;
-            (short s1, short s2) = (-32767, 32767);
-            (int i1, int i2) = (int.MinValue, int.MaxValue);
-            (long l1, long l2) = (long.MinValue, long.MaxValue);
-            long L = 2147483648L;
-            float F = 4.5F;
-            double D = 4.5D;
-            decimal dec = Decimal.Parse("3.333");
-
-
-            Console.WriteLine(sb);
-            Console.WriteLine(s1 + "," + s2);
-            Console.WriteLine(i1 + "," + i2);
-            Console.WriteLine(l1 + "," + l2);
-            Console.WriteLine(L);
-            Console.WriteLine(F);
-            Console.WriteLine(D);
-            Console.WriteLine(dec);
-            Console.WriteLine(dec.ToString("F2"));
-            Console.WriteLine(dec.ToString("F2", CultureInfo.InvariantCulture));
         }
     }
 }
