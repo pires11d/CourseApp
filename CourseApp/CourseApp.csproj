@@ -3,6 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>Course.Program</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\Enums\" />
+  </ItemGroup>
 
 </Project>
