@@ -1,10 +1,9 @@
 ﻿using Course.Entities;
-using Course.Entities.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Course.Services
+namespace Course.Service
 {
     public class AccountService
     {
@@ -14,7 +13,7 @@ namespace Course.Services
         }
         public List<Account> Accounts { get; set; }
 
-        public void StartOperation()
+        public void Start()
         {
             // CRIAÇÃO DE CONTA
             Console.Clear();
@@ -32,7 +31,7 @@ namespace Course.Services
             {
                 Console.WriteLine($"Erro no valor de entrada: {ex.Message}");
                 Console.ReadLine();
-                StartOperation();
+                Start();
             }
 
             Account conta = new Account(name, amount);
@@ -62,7 +61,7 @@ namespace Course.Services
                 conta.Withdraw(withdrawalAmount);
                 Console.WriteLine(conta);
             }
-            catch (BusinessException ex)
+            catch (ApplicationException ex)
             {
                 Console.WriteLine($"Erro: {ex.Message}");
             }
@@ -80,7 +79,7 @@ namespace Course.Services
             switch (option.Key)
             {
                 case ConsoleKey.Enter:
-                    StartOperation();
+                    Start();
                     break;
                 case ConsoleKey.Escape:
                     break;

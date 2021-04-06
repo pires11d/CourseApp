@@ -1,5 +1,5 @@
 ﻿using Course.Entities;
-using Course.Services;
+using Course.Service;
 using System;
 using System.Globalization;
 using System.Text;
@@ -11,16 +11,25 @@ namespace Course
         public static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
+            Start("Rental");
+        }
 
-            Extensions.CallByName("TestingAccount");
-        }       
-
-        public void TestingAccount()
+        private static void Start(string serviceName)
         {
-            new AccountService().StartOperation();     
-        }       
+            Extensions.CallByName(serviceName);
+        }
 
-        private void TestingPerson()
+        public void Rental()
+        {
+            new RentalService().Start();
+        }
+
+        public void Account()
+        {
+            new AccountService().Start();     
+        }
+
+        private void Person()
         {
             string nome = "Maria";
             char genero = 'F';
@@ -34,7 +43,7 @@ namespace Course
             Console.WriteLine(pessoa.ToString(3));
         }
 
-        private void TestingTypes()
+        private void Types()
         {
             sbyte sb = 127;
             (short s1, short s2) = (-32767, 32767);

@@ -1,5 +1,4 @@
-﻿using Course.Entities.Exceptions;
-using System;
+﻿using System;
 
 namespace Course.Entities
 {
@@ -52,11 +51,11 @@ namespace Course.Entities
         {
             if (amount > WithdrawLimit)
             {
-                throw new BusinessException("Limite de saque excedido!");
+                throw new ApplicationException("Limite de saque excedido!");
             }
             if (amount > Balance)
             {
-                throw new BusinessException("Saldo insuficiente!");
+                throw new ApplicationException("Saldo insuficiente!");
             }
 
             Balance -= amount;
