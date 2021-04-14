@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Course.Common\Course.Common.csproj" />
     <ProjectReference Include="..\Course.Domain\Course.Domain.csproj" />
   </ItemGroup>
 

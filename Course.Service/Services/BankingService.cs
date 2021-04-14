@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Course.Service
+namespace Course.Service.Services
 {
-    public class AccountService
+    public class BankingService : IService
     {
-        public AccountService()
+        public BankingService()
         {
             Accounts = new List<Account>();
         }

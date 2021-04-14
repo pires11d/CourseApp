@@ -2,6 +2,8 @@
 using Course.Service;
 using System;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Course
@@ -11,22 +13,47 @@ namespace Course
         public static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            Start("Rental");
+            Start();
         }
 
-        private static void Start(string serviceName)
+        private static void Start()
         {
-            Extensions.CallByName(serviceName);
+            ShowHelp();
+            var input = Console.ReadLine();
+            StartService(input);
         }
 
-        public void Rental()
+        private static void ShowHelp()
         {
-            new RentalService().Start();
+            var servicesList = ServiceManager.GetServices();
+            servicesList = servicesList.Select(x => { x = " - " + x; return x; }).ToList();
+            string services = String.Join("\n", servicesList);
+            string help = "Escolha o serviço que deseja iniciar:\n" + services;
+
+            Console.WriteLine(help);
         }
 
-        public void Account()
+        private static void StartService(string serviceName)
         {
-            new AccountService().Start();     
+            try
+            {
+                IService service = ServiceManager.GetByName(serviceName);
+                Console.Clear();
+                service.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.Clear();
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Digite qualquer tecla para continuar...");
+                Console.ReadLine();
+            }
+            finally
+            {
+                Console.ReadLine();
+                Console.Clear();
+                Start();
+            }
         }
 
         private void Person()
@@ -66,5 +93,32 @@ namespace Course
             Console.WriteLine(dec.ToString("F2"));
             Console.WriteLine(dec.ToString("F2", CultureInfo.InvariantCulture));
         }
+    }
+
+
+    public class Helper
+    {
+        /// <summary>
+        /// Rotina capaz de chamar qualquer método presente no escopo desta classe pelo nome (via <see cref="string"/>)
+        /// </summary>
+        public static void CallByName(string methodName, string param = null)
+        {
+            var program = new Program();
+            Type type = program.GetType();
+            MethodInfo methodInfo = type.GetMethod(methodName);
+            if (methodInfo != null)
+            {
+                if (param != null)
+                    methodInfo.Invoke(program, new object[] { param });
+                else
+                    methodInfo.Invoke(program, new object[] { });
+            }
+            else
+            {
+                Console.WriteLine("Método não encontrado!");
+            }
+        }
+
+
     }
 }

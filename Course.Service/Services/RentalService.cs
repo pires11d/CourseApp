@@ -1,11 +1,19 @@
 ﻿using Course.Domain.Entities;
+using Course.Service.Common;
 using System;
 using System.Globalization;
 
-namespace Course.Service
+namespace Course.Service.Services
 {
-    public class RentalService
+    public class RentalService : IService
     {
+        public RentalService()
+        {
+            CostService.LimitingAmount = 100;
+            CostService.MinimumTaxPercent = 0.15;
+            CostService.MaximumTaxPercent = 0.20;
+        }
+
         public Rental Rental { get; set; }
 
         public void Start()
